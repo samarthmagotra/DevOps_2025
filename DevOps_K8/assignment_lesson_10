@@ -1,0 +1,294 @@
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl get all
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   220d
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl run superset --image=amancevice/superset
+pod/superset created
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl get all
+NAME           READY   STATUS              RESTARTS   AGE
+pod/superset   0/1     ContainerCreating   0          8s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   220d
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl get all
+NAME           READY   STATUS              RESTARTS   AGE
+pod/superset   0/1     ContainerCreating   0          14s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   220d
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl get all
+NAME           READY   STATUS              RESTARTS   AGE
+pod/superset   0/1     ContainerCreating   0          30s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   220d
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl pod/superset logs
+error: unknown command "pod/superset" for "kubectl"
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl logs pod/superset 
+Error from server (BadRequest): container "superset" in pod "superset" is waiting to start: ContainerCreating
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl describe pod/superset
+Name:             superset
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Fri, 18 Apr 2025 22:29:37 +0100
+Labels:           run=superset
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.13
+IPs:
+  IP:  10.244.0.13
+Containers:
+  superset:
+    Container ID:   docker://7fba5078f3b1fc00070c1cb9a92c7509ae38060a45148c9ecd89ca306f37e1b9
+    Image:          amancevice/superset
+    Image ID:       docker-pullable://amancevice/superset@sha256:a41ebfe26e2ca6eb123ff9396a892144e39b786eb5657623593765a3f0552024
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Fri, 18 Apr 2025 22:30:35 +0100
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-6r9t6 (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-6r9t6:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  71s   default-scheduler  Successfully assigned default/superset to minikube
+  Normal  Pulling    69s   kubelet            Pulling image "amancevice/superset"
+  Normal  Pulled     13s   kubelet            Successfully pulled image "amancevice/superset" in 56.419s (56.419s including waiting). Image size: 2527565943 bytes.
+  Normal  Created    13s   kubelet            Created container superset
+  Normal  Started    13s   kubelet            Started container superset
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl get all           
+NAME           READY   STATUS    RESTARTS   AGE
+pod/superset   1/1     Running   0          77s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   220d
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl expose pod/superset --port 8088 --type NodePort
+service/superset exposed
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl get all
+NAME           READY   STATUS    RESTARTS   AGE
+pod/superset   1/1     Running   0          3m52s
+
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP          220d
+service/superset     NodePort    10.107.207.59   <none>        8088:32214/TCP   5s
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl describe service/superset
+Name:                     superset
+Namespace:                default
+Labels:                   run=superset
+Annotations:              <none>
+Selector:                 run=superset
+Type:                     NodePort
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.107.207.59
+IPs:                      10.107.207.59
+Port:                     <unset>  8088/TCP
+TargetPort:               8088/TCP
+NodePort:                 <unset>  32214/TCP
+Endpoints:                10.244.0.13:8088
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % ls
+commands.txt			frontend-service.yaml		redis-master-service.yaml	redis-slave-service.yaml
+frontend-deployment.yaml	redis-master-deployment.yaml	redis-slave-deployment.yaml
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % cd ..
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % ls
+guestbook		helm			pod-with-service.yaml	volumes
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % kubectl get pods pod/superset -o yaml > pod-superset.yaml
+error: there is no need to specify a resource type as a separate argument when passing arguments in resource/name form (e.g. 'kubectl get resource/<resource_name>' instead of 'kubectl get resource resource/<resource_name>'
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % kubectl get  pod/superset -o yaml > pod-superset.yaml 
+Unable to connect to the server: net/http: TLS handshake timeout
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % ls
+guestbook		helm			pod-superset.yaml	pod-with-service.yaml	volumes
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % ls
+guestbook		helm			pod-superset.yaml	pod-with-service.yaml	volumes
+(base) samarthmagotra@Samarth-MacBook-Air k8s % pwd
+/Users/samarthmagotra/Upskill/DevOps_Course_2025/DevOps_K8/k8s
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % cd ..
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % ls
+k8s				mysql-app-screen-cli-capture	mysql-pod.yaml			mysql-service.yaml		pod.yaml			redis-screen-cli-capture
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % cd ..
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_Course_2025 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_Course_2025 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_Course_2025 % ls
+DevOps_Docker		DevOps_K8		DevOps-Course-GIT	DevOps-Course-Python	README.md
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_Course_2025 % cd -
+~/Upskill/DevOps_Course_2025/DevOps_K8
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % ls
+k8s				mysql-app-screen-cli-capture	mysql-pod.yaml			mysql-service.yaml		pod.yaml			redis-screen-cli-capture
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % cd k8
+cd: no such file or directory: k8
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 %   cd k8s 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % ls
+guestbook		helm			pod-superset.yaml	pod-with-service.yaml	volumes
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % vi pod-superset.yaml 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % kubectl get pod pod/superset -o yaml > pod-superset.yaml 
+error: there is no need to specify a resource type as a separate argument when passing arguments in resource/name form (e.g. 'kubectl get resource/<resource_name>' instead of 'kubectl get resource resource/<resource_name>'
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % kubectl get pod superset -o yaml > pod-superset.yaml 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % vi pod-superset.yaml 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % kubectl get service superset -o yaml > superset-service.yaml
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % vi superset-service.yaml 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % vi superset-service.yaml
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % kubectl run airflow --image=puckel/docker-airflow
+pod/airflow created
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % kubectl get all
+NAME           READY   STATUS              RESTARTS   AGE
+pod/airflow    0/1     ContainerCreating   0          6s
+pod/superset   1/1     Running             0          13m
+
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP          220d
+service/superset     NodePort    10.107.207.59   <none>        8088:32214/TCP   9m18s
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % kubectl get pod airflow -o yaml > pod-airflow.yaml  
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % vi pod-airflow.yaml 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % kubectl get all                                   
+
+
+^C
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % kubectl get all
+^C
+(base) samarthmagotra@Samarth-MacBook-Air k8s % kubectl expose pod/airflow --port 8080 --type NodePort
+service/airflow exposed
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % kubectl get all                                       
+NAME           READY   STATUS              RESTARTS   AGE
+pod/airflow    0/1     ContainerCreating   0          2m29s
+pod/superset   1/1     Running             0          15m
+
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/airflow      NodePort    10.99.232.207   <none>        8080:30816/TCP   9s
+service/kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP          220d
+service/superset     NodePort    10.107.207.59   <none>        8088:32214/TCP   11m
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % kubectl get all
+NAME           READY   STATUS              RESTARTS   AGE
+pod/airflow    0/1     ContainerCreating   0          2m36s
+pod/superset   1/1     Running             0          15m
+
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/airflow      NodePort    10.99.232.207   <none>        8080:30816/TCP   15s
+service/kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP          220d
+service/superset     NodePort    10.107.207.59   <none>        8088:32214/TCP   11m
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % kubectl get all
+NAME           READY   STATUS              RESTARTS   AGE
+pod/airflow    0/1     ContainerCreating   0          2m55s
+pod/superset   1/1     Running             0          15m
+
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/airflow      NodePort    10.99.232.207   <none>        8080:30816/TCP   34s
+service/kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP          220d
+service/superset     NodePort    10.107.207.59   <none>        8088:32214/TCP   12m
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % ls
+guestbook		helm			pod-airflow.yaml	pod-superset.yaml	pod-with-service.yaml	superset-service.yaml	volumes
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % kubectl get service airflow -o yaml > airflow-service.yaml
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % ls
+airflow-service.yaml	guestbook		helm			pod-airflow.yaml	pod-superset.yaml	pod-with-service.yaml	superset-service.yaml	volumes
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % vi airflow-service.yaml 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % kubectl get all                                           
+NAME           READY   STATUS              RESTARTS   AGE
+pod/airflow    0/1     ContainerCreating   0          4m31s
+pod/superset   1/1     Running             0          17m
+
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/airflow      NodePort    10.99.232.207   <none>        8080:30816/TCP   2m10s
+service/kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP          220d
+service/superset     NodePort    10.107.207.59   <none>        8088:32214/TCP   13m
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 

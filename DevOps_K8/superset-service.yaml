@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2025-04-18T21:33:24Z"
+  labels:
+    run: superset
+  name: superset
+  namespace: default
+  resourceVersion: "24166"
+  uid: 08126f1b-3857-4cad-9512-fce1920a4a76
+spec:
+  clusterIP: 10.107.207.59
+  clusterIPs:
+  - 10.107.207.59
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 32214
+    port: 8088
+    protocol: TCP
+    targetPort: 8088
+  selector:
+    run: superset
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}

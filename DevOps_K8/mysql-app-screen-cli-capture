@@ -1,0 +1,463 @@
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl config view --minify --output 'jsonpath={..namespace}'
+default%                                                                                                                                                                                                    (base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl get pods -A                                           
+NAMESPACE     NAME                               READY   STATUS      RESTARTS        AGE
+kube-system   coredns-7db6d8ff4d-xp6fk           1/1     Running     1 (219d ago)    219d
+kube-system   etcd-minikube                      1/1     Running     1 (219d ago)    219d
+kube-system   kube-apiserver-minikube            1/1     Running     1 (3h37m ago)   219d
+kube-system   kube-controller-manager-minikube   1/1     Running     1 (219d ago)    219d
+kube-system   kube-proxy-zwvhc                   1/1     Running     1 (219d ago)    219d
+kube-system   kube-scheduler-minikube            1/1     Running     1 (219d ago)    219d
+kube-system   storage-provisioner                1/1     Running     6 (3h36m ago)   219d
+mynamespace   busybox                            0/1     Completed   0               219d
+mynamespace   nginx                              0/1     Completed   0               219d
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl run mysql-pod --image=mysql:latert --env="MYSQL_ROOT_PASSWORD=my-secret-pw"
+pod/mysql-pod created
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl get pods                                                                   
+NAME        READY   STATUS         RESTARTS   AGE
+mysql-pod   0/1     ErrImagePull   0          5s
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl delete pod mysql-pod
+pod "mysql-pod" deleted
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl get pods            
+No resources found in default namespace.
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl run mysql-pod --image=mysql:latest --env="MYSQL_ROOT_PASSWORD=my-secret-pw"
+pod/mysql-pod created
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl get pods                                                                   
+NAME        READY   STATUS              RESTARTS   AGE
+mysql-pod   0/1     ContainerCreating   0          2s
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl logs mysql-pod
+Error from server (BadRequest): container "mysql-pod" in pod "mysql-pod" is waiting to start: ContainerCreating
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl get pods                                                                   
+NAME        READY   STATUS    RESTARTS   AGE
+mysql-pod   1/1     Running   0          22s
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl logs mysql-pod
+2025-04-18 13:59:44+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 9.3.0-1.el9 started.
+2025-04-18 13:59:44+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+2025-04-18 13:59:44+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 9.3.0-1.el9 started.
+2025-04-18 13:59:44+00:00 [Note] [Entrypoint]: Initializing database files
+2025-04-18T13:59:44.898544Z 0 [System] [MY-015017] [Server] MySQL Server Initialization - start.
+2025-04-18T13:59:44.899555Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 9.3.0) initializing of server in progress as process 80
+2025-04-18T13:59:44.905957Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2025-04-18T13:59:45.051118Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2025-04-18T13:59:45.582203Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+2025-04-18T13:59:47.750432Z 0 [System] [MY-015018] [Server] MySQL Server Initialization - end.
+2025-04-18 13:59:47+00:00 [Note] [Entrypoint]: Database files initialized
+2025-04-18 13:59:47+00:00 [Note] [Entrypoint]: Starting temporary server
+2025-04-18T13:59:47.799928Z 0 [System] [MY-015015] [Server] MySQL Server - start.
+2025-04-18T13:59:48.279608Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 9.3.0) starting as process 121
+2025-04-18T13:59:48.298326Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2025-04-18T13:59:49.093233Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2025-04-18T13:59:49.478698Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2025-04-18T13:59:49.478740Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2025-04-18T13:59:49.480375Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2025-04-18T13:59:49.492444Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
+2025-04-18T13:59:49.492465Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '9.3.0'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  MySQL Community Server - GPL.
+2025-04-18 13:59:49+00:00 [Note] [Entrypoint]: Temporary server started.
+'/var/lib/mysql/mysql.sock' -> '/var/run/mysqld/mysqld.sock'
+Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/leapseconds' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/tzdata.zi' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
+
+2025-04-18 13:59:50+00:00 [Note] [Entrypoint]: Stopping temporary server
+2025-04-18T13:59:50.710265Z 11 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 9.3.0).
+2025-04-18T13:59:51.887724Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 9.3.0)  MySQL Community Server - GPL.
+2025-04-18T13:59:51.887754Z 0 [System] [MY-015016] [Server] MySQL Server - end.
+2025-04-18 13:59:52+00:00 [Note] [Entrypoint]: Temporary server stopped
+
+2025-04-18 13:59:52+00:00 [Note] [Entrypoint]: MySQL init process done. Ready for start up.
+
+2025-04-18T13:59:52.828950Z 0 [System] [MY-015015] [Server] MySQL Server - start.
+2025-04-18T13:59:53.172469Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 9.3.0) starting as process 1
+2025-04-18T13:59:53.178286Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2025-04-18T13:59:53.384809Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2025-04-18T13:59:53.732834Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2025-04-18T13:59:53.732890Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2025-04-18T13:59:53.736640Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2025-04-18T13:59:53.757422Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2025-04-18T13:59:53.757901Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '9.3.0'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl describe pods mysql-pod
+Name:             mysql-pod
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Fri, 18 Apr 2025 14:59:26 +0100
+Labels:           run=mysql-pod
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.7
+IPs:
+  IP:  10.244.0.7
+Containers:
+  mysql-pod:
+    Container ID:   docker://a6fc0f51144f2114e7768749ed57adb243d5e48b897b1447953ad455a6e1d892
+    Image:          mysql:latest
+    Image ID:       docker-pullable://mysql@sha256:7839322bd6c3174a699586c3ea36314c59b61b4ce01b4146951818b94aef5fd7
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Fri, 18 Apr 2025 14:59:44 +0100
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      MYSQL_ROOT_PASSWORD:  my-secret-pw
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-b2j5x (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-b2j5x:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  54s   default-scheduler  Successfully assigned default/mysql-pod to minikube
+  Normal  Pulling    53s   kubelet            Pulling image "mysql:latest"
+  Normal  Pulled     36s   kubelet            Successfully pulled image "mysql:latest" in 16.966s (16.966s including waiting). Image size: 876234535 bytes.
+  Normal  Created    36s   kubelet            Created container mysql-pod
+  Normal  Started    36s   kubelet            Started container mysql-pod
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl get pods               
+NAME        READY   STATUS    RESTARTS   AGE
+mysql-pod   1/1     Running   0          64s
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl get pods mysql-pod -o yaml > pod.yaml
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % ls
+pod.yaml
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl get pods mysql-pod -o yaml > mysql-pod.yaml
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % ls
+mysql-pod.yaml	pod.yaml
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % vi mysql-pod.yaml 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl apply -f mysql-pod.yaml 
+pod/mysql-pod2 created
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl get pods                                   
+NAME         READY   STATUS    RESTARTS   AGE
+mysql-pod    1/1     Running   0          5m5s
+mysql-pod2   1/1     Running   0          4s
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl delete pod mysql-pod
+pod "mysql-pod" deleted
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl get pods            
+NAME         READY   STATUS    RESTARTS   AGE
+mysql-pod2   1/1     Running   0          6m33s
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl run mysql-pod --image=mysql:latest --port=3306 --env="MYSQL_ROOT_PASSWORD=my-secret-pw"
+pod/mysql-pod created
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl get pods                                                                               
+NAME         READY   STATUS    RESTARTS   AGE
+mysql-pod    1/1     Running   0          2s
+mysql-pod2   1/1     Running   0          9m24s
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl describe pod mysql-pod
+Name:             mysql-pod
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Fri, 18 Apr 2025 15:13:49 +0100
+Labels:           run=mysql-pod
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.9
+IPs:
+  IP:  10.244.0.9
+Containers:
+  mysql-pod:
+    Container ID:   docker://154f87d969954f2afc323140468bfc596ea59052e50466133db0529f93613206
+    Image:          mysql:latest
+    Image ID:       docker-pullable://mysql@sha256:7839322bd6c3174a699586c3ea36314c59b61b4ce01b4146951818b94aef5fd7
+    Port:           3306/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Fri, 18 Apr 2025 15:13:51 +0100
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      MYSQL_ROOT_PASSWORD:  my-secret-pw
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-k2kqt (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-k2kqt:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  12s   default-scheduler  Successfully assigned default/mysql-pod to minikube
+  Normal  Pulling    12s   kubelet            Pulling image "mysql:latest"
+  Normal  Pulled     10s   kubelet            Successfully pulled image "mysql:latest" in 1.19s (1.19s including waiting). Image size: 876234535 bytes.
+  Normal  Created    10s   kubelet            Created container mysql-pod
+  Normal  Started    10s   kubelet            Started container mysql-pod
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl get pod mysql-pod -o yaml > pod.yaml 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % vi pod.yaml 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % ls
+mysql-pod.yaml	pod.yaml
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl expose pod mysql-pod --type=NodePort --name=mysql-service --port=3306 --target-port=3306 --node-port=33006
+error: unknown flag: --node-port
+See 'kubectl expose --help' for usage.
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl expose pod mysql-pod --type=NodePort --name=mysql-service --port=3306 --target-port=3306 --help           
+Expose a resource as a new Kubernetes service.
+
+ Looks up a deployment, service, replica set, replication controller or pod by name and uses the selector for that
+resource as the selector for a new service on the specified port. A deployment or replica set will be exposed as a
+service only if its selector is convertible to a selector that service supports, i.e. when the selector contains only
+the matchLabels component. Note that if no port is specified via --port and the exposed resource has multiple ports, all
+will be re-used by the new service. Also if no labels are specified, the new service will re-use the labels from the
+resource it exposes.
+
+ Possible resources include (case insensitive):
+
+ pod (po), service (svc), replicationcontroller (rc), deployment (deploy), replicaset (rs)
+
+Examples:
+  # Create a service for a replicated nginx, which serves on port 80 and connects to the containers on port 8000
+  kubectl expose rc nginx --port=80 --target-port=8000
+  
+  # Create a service for a replication controller identified by type and name specified in "nginx-controller.yaml",
+which serves on port 80 and connects to the containers on port 8000
+  kubectl expose -f nginx-controller.yaml --port=80 --target-port=8000
+  
+  # Create a service for a pod valid-pod, which serves on port 444 with the name "frontend"
+  kubectl expose pod valid-pod --port=444 --name=frontend
+  
+  # Create a second service based on the above service, exposing the container port 8443 as port 443 with the name
+"nginx-https"
+  kubectl expose service nginx --port=443 --target-port=8443 --name=nginx-https
+  
+  # Create a service for a replicated streaming application on port 4100 balancing UDP traffic and named 'video-stream'.
+  kubectl expose rc streamer --port=4100 --protocol=UDP --name=video-stream
+  
+  # Create a service for a replicated nginx using replica set, which serves on port 80 and connects to the containers on
+port 8000
+  kubectl expose rs nginx --port=80 --target-port=8000
+  
+  # Create a service for an nginx deployment, which serves on port 80 and connects to the containers on port 8000
+  kubectl expose deployment nginx --port=80 --target-port=8000
+
+Options:
+    --allow-missing-template-keys=true:
+	If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to
+	golang and jsonpath output formats.
+
+    --cluster-ip='':
+	ClusterIP to be assigned to the service. Leave empty to auto-allocate, or set to 'None' to create a headless
+	service.
+
+    --dry-run='none':
+	Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without
+	sending it. If server strategy, submit server-side request without persisting the resource.
+
+    --external-ip='':
+	Additional external IP address (not managed by Kubernetes) to accept for the service. If this IP is routed to
+	a node, the service can be accessed by this IP in addition to its generated service IP.
+
+    --field-manager='kubectl-expose':
+	Name of the manager used to track field ownership.
+
+    -f, --filename=[]:
+	Filename, directory, or URL to files identifying the resource to expose a service
+
+    -k, --kustomize='':
+	Process the kustomization directory. This flag can't be used together with -f or -R.
+
+    -l, --labels='':
+	Labels to apply to the service created by this call.
+
+    --load-balancer-ip='':
+	IP to assign to the LoadBalancer. If empty, an ephemeral IP will be created and used (cloud-provider
+	specific).
+
+    --name='':
+	The name for the newly created object.
+
+    -o, --output='':
+	Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath,
+	jsonpath-as-json, jsonpath-file).
+
+    --override-type='merge':
+	The method used to override the generated object: json, merge, or strategic.
+
+    --overrides='':
+	An inline JSON override for the generated object. If this is non-empty, it is used to override the generated
+	object. Requires that the object supply a valid apiVersion field.
+
+    --port='':
+	The port that the service should serve on. Copied from the resource being exposed, if unspecified
+
+    --protocol='':
+	The network protocol for the service to be created. Default is 'TCP'.
+
+    -R, --recursive=false:
+	Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests
+	organized within the same directory.
+
+    --save-config=false:
+	If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will
+	be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
+
+    --selector='':
+	A label selector to use for this service. Only equality-based selector requirements are supported. If empty
+	(the default) infer the selector from the replication controller or replica set.)
+
+    --session-affinity='':
+	If non-empty, set the session affinity for the service to this; legal values: 'None', 'ClientIP'
+
+    --show-managed-fields=false:
+	If true, keep the managedFields when printing objects in JSON or YAML format.
+
+    --target-port='':
+	Name or number for the port on the container that the service should direct traffic to. Optional.
+
+    --template='':
+	Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format
+	is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+
+    --type='':
+	Type for this service: ClusterIP, NodePort, LoadBalancer, or ExternalName. Default is 'ClusterIP'.
+
+Usage:
+  kubectl expose (-f FILENAME | TYPE NAME) [--port=port] [--protocol=TCP|UDP|SCTP] [--target-port=number-or-name]
+[--name=name] [--external-ip=external-ip-of-service] [--type=type] [options]
+
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl expose pod mysql-pod --type=NodePort --name=mysql-service --port=3306 --target-port=3306 --dry-run=client -o yaml > mysql-service.yaml
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % vi mysql-service.yaml 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % ls
+mysql-pod.yaml		mysql-service.yaml	pod.yaml
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % vi mysql-service.yaml 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl apply -f mysql-service.yaml 
+The Service "mysql-service" is invalid: spec.ports[0].nodePort: Invalid value: 33066: provided port is not in the valid range. The range of valid ports is 30000-32767
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % vi mysql-service.yaml              
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % vi mysql-service.yaml              
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl apply -f mysql-service.yaml
+service/mysql-service created
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl get all
+NAME             READY   STATUS    RESTARTS   AGE
+pod/mysql-pod    1/1     Running   0          5m58s
+pod/mysql-pod2   1/1     Running   0          15m
+
+NAME                    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+service/kubernetes      ClusterIP   10.96.0.1        <none>        443/TCP          219d
+service/mysql-service   NodePort    10.111.148.117   <none>        3306:30066/TCP   5s
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % kubectl describe service/mysql-service
+Name:                     mysql-service
+Namespace:                default
+Labels:                   run=mysql-pod
+Annotations:              <none>
+Selector:                 run=mysql-pod
+Type:                     NodePort
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.111.148.117
+IPs:                      10.111.148.117
+Port:                     <unset>  3306/TCP
+TargetPort:               3306/TCP
+NodePort:                 <unset>  30066/TCP
+Endpoints:                10.244.0.9:3306
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Internal Traffic Policy:  Cluster
+Events:                   <none>

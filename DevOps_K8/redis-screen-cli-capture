@@ -1,0 +1,181 @@
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % git clone https://github.com/gitelmandanny/k8.git
+Cloning into 'k8'...
+git: 'credential-wincred' is not a git command. See 'git --help'.
+Username for 'https://github.com': samarthmagotra
+Password for 'https://samarthmagotra@github.com': 
+remote: Repository not found.
+fatal: repository 'https://github.com/gitelmandanny/k8.git/' not found
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % git clone https://github.com/gitelmandanny/k8s.git
+Cloning into 'k8s'...
+remote: Enumerating objects: 70, done.
+remote: Counting objects: 100% (70/70), done.
+remote: Compressing objects: 100% (39/39), done.
+remote: Total 70 (delta 30), reused 70 (delta 30), pack-reused 0 (from 0)
+Receiving objects: 100% (70/70), 14.70 KiB | 7.35 MiB/s, done.
+Resolving deltas: 100% (30/30), done.
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % ls
+k8s				mysql-app-screen-cli-capture	mysql-pod.yaml			mysql-service.yaml		pod.yaml
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % 
+(base) samarthmagotra@Samarth-MacBook-Air DevOps_K8 % cd k8s 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % ls
+guestbook		helm			pod-with-service.yaml	volumes
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % vi guestbook 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % 
+(base) samarthmagotra@Samarth-MacBook-Air k8s % cd guestbook 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % ls
+commands.txt			frontend-service.yaml		redis-master-service.yaml	redis-slave-service.yaml
+frontend-deployment.yaml	redis-master-deployment.yaml	redis-slave-deployment.yaml
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % vi commands.txt 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % vi commands.txt 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % vi frontend-service.yaml 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % vi frontend-service.yaml
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % vi frontend-service.yaml
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % vi redis-master-service.yaml 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % vi redis-slave-service.yaml 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % vi redis-slave-deployment.yaml 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % vi redis-slave-deployment.yaml 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % vi frontend-service.yaml 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % vi redis-slave-deployment.yaml
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % vi frontend-service.yaml      
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % vi commands.txt 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl apply -f redis-slave-deployment.yaml 
+deployment.apps/redis-slave created
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl apply -f frontend-service.yaml
+service/frontend created
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl get all
+NAME                               READY   STATUS    RESTARTS   AGE
+pod/mysql-pod                      1/1     Running   0          19m
+pod/mysql-pod2                     1/1     Running   0          28m
+pod/redis-slave-69c76b946f-cfcfr   1/1     Running   0          18s
+pod/redis-slave-69c76b946f-dwztl   1/1     Running   0          18s
+pod/redis-slave-69c76b946f-tn82b   1/1     Running   0          18s
+
+NAME                    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+service/frontend        NodePort    10.101.66.16     <none>        80:31665/TCP     4s
+service/kubernetes      ClusterIP   10.96.0.1        <none>        443/TCP          220d
+service/mysql-service   NodePort    10.111.148.117   <none>        3306:30066/TCP   13m
+
+NAME                          READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/redis-slave   3/3     3            3           18s
+
+NAME                                     DESIRED   CURRENT   READY   AGE
+replicaset.apps/redis-slave-69c76b946f   3         3         3       18s
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl desscribe deployment.apps/redis-slave
+error: unknown command "desscribe" for "kubectl"
+
+Did you mean this?
+	describe
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl describe deployment.apps/redis-slave 
+Name:                   redis-slave
+Namespace:              default
+CreationTimestamp:      Fri, 18 Apr 2025 15:32:58 +0100
+Labels:                 app=redis
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=redis,appname=guestbook,role=slave,tier=backend
+Replicas:               3 desired | 3 updated | 3 total | 3 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=redis
+           appname=guestbook
+           role=slave
+           tier=backend
+  Containers:
+   slave:
+    Image:      gcr.io/google_samples/gb-redisslave:v1
+    Port:       6379/TCP
+    Host Port:  0/TCP
+    Requests:
+      cpu:     100m
+      memory:  100Mi
+    Environment:
+      GET_HOSTS_FROM:  dns
+    Mounts:            <none>
+  Volumes:             <none>
+  Node-Selectors:      <none>
+  Tolerations:         <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   redis-slave-69c76b946f (3/3 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  73s   deployment-controller  Scaled up replica set redis-slave-69c76b946f to 3
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl describe service/frontend           
+Name:                     frontend
+Namespace:                default
+Labels:                   appname=guestbook
+                          tier=frontend
+Annotations:              <none>
+Selector:                 appname=guestbook,tier=frontend
+Type:                     NodePort
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.101.66.16
+IPs:                      10.101.66.16
+Port:                     <unset>  80/TCP
+TargetPort:               80/TCP
+NodePort:                 <unset>  31665/TCP
+Endpoints:                
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % kubectl get all                  
+NAME                               READY   STATUS    RESTARTS   AGE
+pod/mysql-pod                      1/1     Running   0          21m
+pod/mysql-pod2                     1/1     Running   0          30m
+pod/redis-slave-69c76b946f-cfcfr   1/1     Running   0          119s
+pod/redis-slave-69c76b946f-dwztl   1/1     Running   0          119s
+pod/redis-slave-69c76b946f-tn82b   1/1     Running   0          119s
+
+NAME                    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+service/frontend        NodePort    10.101.66.16     <none>        80:31665/TCP     105s
+service/kubernetes      ClusterIP   10.96.0.1        <none>        443/TCP          220d
+service/mysql-service   NodePort    10.111.148.117   <none>        3306:30066/TCP   15m
+
+NAME                          READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/redis-slave   3/3     3            3           119s
+
+NAME                                     DESIRED   CURRENT   READY   AGE
+replicaset.apps/redis-slave-69c76b946f   3         3         3       119s
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
+(base) samarthmagotra@Samarth-MacBook-Air guestbook % 
